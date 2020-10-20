@@ -7,11 +7,26 @@ const Postform = () => {
     })
 
     const handleChange = e => setPost({ [e.target.name]: e.target.value})
+
+    const onSubmit = e => {
+        e.preventDefault();
+        const new_post = {
+            title: post.title,
+            body: post.body
+        }
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(new_post)
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+    }
     
     return (
         <div>
             <h1>Add Post</h1>
-            <form>
+            <form onSubmit={onSubmit}>
                 <div>
                     <label>Title: </label><br/>
                     <input 
